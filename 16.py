@@ -1,4 +1,4 @@
-from sklearn.ensemble import RandomForestClassifier as rdc
+from sklearn.ensemble import RandomForestClassifier as rfc
 oyuncular = [
     [25, 9, 8], [10, 4, 3], [30, 2, 2], [18, 8, 9],
     [12, 5, 4], [28, 9, 10], [8, 3, 2], [22, 7, 8],
@@ -17,7 +17,7 @@ kararlar = [
     "Olamaz", "Kaptan Olur", "Kaptan Olur", "Olamaz"
 ]
 
-konsey_ai = rdc(n_estimators=100, random_state=42).fit(oyuncular, kararlar)
+konsey_ai = rfc(n_estimators=100, random_state=42).fit(oyuncular, kararlar)
 
 print("--- E-SPOR KAPTANLIK SEÇMELERİ ---")
 
@@ -35,3 +35,19 @@ while True:
     if devam != "e":
         print("\nTahmin programından çıkılıyor...")
         break
+
+durumlar = [
+    [0, 1, 0], [1, 1, 0], [0, 0, 0], [0, 1, 1],
+    [1, 0, 1], [0, 0, 1], [1, 1, 1], [0, 1, 0]
+]
+izin = ["PARTİ ZAMANI!", "İzin Yok (Aile Evde)", "Önce Evi Temizle!", "İzin Yok (Yarın Okul Var)",
+        "Kesinlikle Hayır", "İzin Yok", "İzin Yok", "PARTİ ZAMANI!"]
+
+parti_ai = rfc(n_estimators=50).fit(durumlar, izin)
+
+print("\n--- PARTİ İZİNİ TAHMİN PROGRAMI ---")
+aile = int(input("Aile evde mi? (0: Hayır, 1: Evet): "))
+temizlik = int(input("Evi temizledin mi? (0: Hayır, 1: Evet): "))
+okul = int(input("Yarın okul var mı? (0: Hayır, 1: Evet): "))
+
+print("\n100 Ağacın Ortak Kararı: ", parti_ai.predict([[aile, temizlik, okul]])[0])
